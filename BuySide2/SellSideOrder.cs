@@ -4,24 +4,24 @@ namespace Gateway.Model
 {
 	internal class SellSideOrder
 	{
-		private long? allocation;
-
 		public SellSideOrder()
 		{
 		}
 
 		public SellSideOrder(ISellSideOrderState state)
 		{
-			allocation = state.Allocation;
+			Allocation = state.Allocation;
 			IsCancelRejected = state.CancelRejected;
 		}
 
+		public long? Allocation { get; private set; }
+
 		public bool IsCancelRejected { get; private set; }
-		public bool IsAllocated => allocation != null;
+		public bool IsAllocated => Allocation != null;
 
 		public void Allocate(long? allocation)
 		{
-			this.allocation = allocation;
+			Allocation = allocation;
 		}
 
 		public void CancelRejected()

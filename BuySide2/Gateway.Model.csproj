@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Dto\BrokerDto.cs" />
+    <Compile Include="Api\Dto\BuySideDto.cs" />
+    <Compile Include="Api\Dto\SellSideToDto.cs" />
     <Compile Include="Api\Dto\SellSideDto.cs" />
     <Compile Include="Api\GatewayService.cs" />
     <Compile Include="Broker.cs" />

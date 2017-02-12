@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Gateway.Model
 {
@@ -23,42 +22,28 @@ namespace Gateway.Model
 			this.state = state.Cancelled ? (ISellSide) new Cancelled(this) : new Active(this);
 		}
 
+		public int Id { get; }
+
+		public IEnumerable<Broker> Brokers => brokers;
+
+		public bool IsCancelled => state is Cancelled;
+
+		public void Cancel() => state.Cancel();
+
+		public void Accept(int brokerId) => state.Accept(brokerId);
+
+		public void Reject(int brokerId) => state.Reject(brokerId);
+
+		public void Allocate(int brokerId, long allocation) => state.Allocate(brokerId, allocation);
+
+		public void Delete(int brokerId) => state.Delete(brokerId);
+
+		public void RejectCancel(int brokerId) => state.RejectCancel(brokerId);
+
 		private void Raise<T>() where T: IDomainEvent
 		{
 			var evt = EventFactory.Create<T>(this);
 			Raise(evt);
-		}
-
-		public int Id { get; }
-
-		public void Cancel()
-		{
-			state.Cancel();
-		}
-
-		public void Accept(int brokerId)
-		{
-			state.Accept(brokerId);
-		}
-
-		public void Reject(int brokerId)
-		{
-			state.Reject(brokerId);
-		}
-
-		public void Allocate(int brokerId, long allocation)
-		{
-			state.Allocate(brokerId, allocation);
-		}
-
-		public void Delete(int brokerId)
-		{
-			state.Delete(brokerId);
-		}
-
-		public void RejectCancel(int brokerId)
-		{
-			state.RejectCancel(brokerId);
 		}
 
 		interface ISellSide
@@ -70,12 +55,5 @@ namespace Gateway.Model
 			void Delete(int brokerId);
 			void RejectCancel(int brokerId);
 		}
-	}
-
-
-	static class BrokerLinq
-	{
-		public static IEnumerable<Broker> ExceptRejected(this IEnumerable<Broker> brokers) => brokers.Where(b => !b.IsRejected);
-		public static IEnumerable<Broker> ExceptDeleted(this IEnumerable<Broker> brokers) => brokers.Where(b => !b.IsDeleted);
 	}
 }

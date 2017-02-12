@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Gateway.Model
 {
-	internal class BrokerCollection
+	internal class BrokerCollection : IEnumerable<Broker>
 	{
 		private readonly IReadOnlyCollection<Broker> brokers;
 
@@ -27,10 +28,6 @@ namespace Gateway.Model
 		public bool HasAcceptedOrders() => brokers.Any(b => b.HasOrder);
 
 		public bool HasAllocation() => brokers.Any(b => b.Order != null && b.Order.IsAllocated);
-
-		//public bool AllCancelRejected() => Query().AllCancelRejected;
-		//public bool AllInactive() => Query().AllInactive;
-		//public bool AllRejected() => Query().AllRejected;
 
 		public QueryResult Query() => new QueryResult(brokers);
 
@@ -62,5 +59,9 @@ namespace Gateway.Model
 			public readonly bool AllInactive;
 			public readonly bool AllCancelRejected;
 		}
+
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		public IEnumerator<Broker> GetEnumerator() => brokers.GetEnumerator();
 	}
 }
