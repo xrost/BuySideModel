@@ -17,8 +17,15 @@ namespace Gateway.Model
 
 			public void Cancel()
 			{
+				EnsureNoAllocations();
 				parent.state = new Cancelled(parent);
 				parent.Raise<BuySideEvents.Cancelled>();
+			}
+
+			private void EnsureNoAllocations()
+			{
+				if (Brokers.HasAllocation())
+					throw new InvalidOperationException("Allocated order can not be cancelled");
 			}
 
 			public void Accept(int brokerId)

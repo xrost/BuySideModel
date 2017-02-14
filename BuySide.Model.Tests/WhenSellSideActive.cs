@@ -66,5 +66,15 @@ namespace Gateway.Model.Tests
 
 			Assert.Throws<InvalidOperationException>(() => sellSide.Cancel());
 		}
+
+		[Fact]
+		public void When_Allocation_Exists_Cancel_Is_Not_Allowed()
+		{
+			SellSide sellSide = SellSide()
+				.Broker(b => b.WithId(1).WithOrder(o => o.Allocated(10)))
+				.Broker(b => b.WithId(2));
+
+			Assert.Throws<InvalidOperationException>(() => sellSide.Cancel());
+		}
     }
 }
