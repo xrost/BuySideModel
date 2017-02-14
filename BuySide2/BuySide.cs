@@ -5,28 +5,29 @@ namespace Gateway.Model
 {
 	internal class BuySide
     {
-	    private readonly int expectedStepCount;
 	    private readonly List<object> steps = new List<object>();
 
 	    public BuySide(IBuySideState state)
 	    {
 		    Id = state.Id;
-		    expectedStepCount = state.ExpectedCount;
+			ExpectedStepCount = state.ExpectedCount;
 	    }
 
 	    public SellSide SellSide { get; private set; }
+	    public int ExpectedStepCount { get; }
+	    public bool IsCompleted() => steps.Count == ExpectedStepCount;
 
-	    private bool IsCompleted => steps.Count == expectedStepCount;
+	    public IReadOnlyCollection<object> Steps => steps;
 
 		public int Id { get; }
 
 	    public void Add(object step)
 	    {
-		    if (IsCompleted)
+		    if (IsCompleted())
 			    throw new InvalidOperationException();
 
 			steps.Add(step);
-			if (IsCompleted)
+			if (IsCompleted())
 				SellSide = SellSide.CreateNew(Id);
 	    }
 

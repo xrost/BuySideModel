@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Gateway.Model
 {
@@ -76,16 +78,19 @@ namespace Gateway.Model
 	[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 	[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 	[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-	internal static class BuySideEvents
+	public static class BuySideEvents
 	{
 		public class Completed : IDomainEvent
 		{
-			public Completed(int orderId)
+			public Completed(int orderId, IEnumerable<int> brokers)
 			{
 				OrderId = orderId;
+				Brokers = brokers.ToList();
 			}
 
 			public int OrderId { get; }
+
+			public IReadOnlyCollection<int> Brokers { get; }
 		}
 
 		public class Cancelled : IDomainEvent

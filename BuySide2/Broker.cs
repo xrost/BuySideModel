@@ -39,6 +39,7 @@ namespace Gateway.Model
 		}
 
 		public bool HasOrder => Order != null;
+		public bool IsPending => Order == null && deactivateAction == DeactivateOrderAction.None;
 		public bool IsRejected => deactivateAction == DeactivateOrderAction.Rejected;
 		public bool IsDeleted => deactivateAction == DeactivateOrderAction.Deleted;
 

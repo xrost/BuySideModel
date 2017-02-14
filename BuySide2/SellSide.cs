@@ -11,7 +11,6 @@ namespace Gateway.Model
 		public static SellSide CreateNew(int id)
 		{
 			var sellSide = new SellSide(SellSideBuilder.New(id));
-			sellSide.Raise<BuySideEvents.Completed>();
 			return sellSide;
 		}
 

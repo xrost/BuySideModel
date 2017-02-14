@@ -16,16 +16,6 @@ namespace Gateway.Model.Tests
 		}
 
 		[Fact]
-		public void When_SellSideCreated_Event_Raised()
-		{
-			BuySide buySide = BuySideBuilder.New(1).ExpectedCount(2);
-			buySide.Add("");
-			buySide.Add("");
-
-			buySide.SellSide.AssertSingleEvent<BuySideEvents.Completed>();
-		}
-
-		[Fact]
 		public void CanNot_Add_More_Steps_Then_ExpectedCount()
 		{
 			BuySide buySide = BuySideBuilder.New(1).ExpectedCount(2);
