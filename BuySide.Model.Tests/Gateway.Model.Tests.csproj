@@ -70,7 +70,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuySide2\Gateway.Model.csproj">
+    <ProjectReference Include="..\Gateway.Model\Gateway.Model.csproj">
       <Project>{20cb797d-0bf7-4e4b-9124-7a4a20cd8407}</Project>
       <Name>Gateway.Model</Name>
     </ProjectReference>
