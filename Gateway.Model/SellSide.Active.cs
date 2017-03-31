@@ -68,7 +68,7 @@ namespace Gateway.Model
 				if (query.AllRejected)
 					parent.Raise<SellSideEvents.Rejected>();
 				else if (query.AllInactive)
-						parent.Raise<SellSideEvents.Cancelled>();
+					parent.Raise<SellSideEvents.Cancelled>();
 			}
 		}
 	}

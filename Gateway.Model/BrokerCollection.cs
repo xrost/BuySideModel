@@ -27,7 +27,7 @@ namespace Gateway.Model
 
 		public bool HasAcceptedOrders() => brokers.Any(b => b.HasOrder);
 
-		public bool HasAllocation() => brokers.Any(b => b.Order != null && b.Order.IsAllocated);
+		public bool HasAllocation() => brokers.Any(b => b.HasOrder && b.Order.IsAllocated);
 
 		public QueryResult Query() => new QueryResult(brokers);
 

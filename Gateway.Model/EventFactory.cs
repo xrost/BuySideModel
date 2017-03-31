@@ -9,12 +9,12 @@ namespace Gateway.Model
 	{
 		private static readonly Dictionary<Type, ConstructorInfo> eventsWithOrderId;
 
-		public static IDomainEvent Create<T>(SellSide sellSide) where T: IDomainEvent
+		public static IDomainEvent Create<T>(SellSide sellSide) where T : IDomainEvent
 		{
 			ConstructorInfo constructor;
 			if (!eventsWithOrderId.TryGetValue(typeof(T), out constructor))
 				throw new InvalidOperationException();
-			return (T)constructor.Invoke(new object[] { sellSide.Id});
+			return (T)constructor.Invoke(new object[] { sellSide.Id });
 		}
 
 		static EventFactory()
